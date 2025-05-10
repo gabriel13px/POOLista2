@@ -1,4 +1,4 @@
-package PontoRetaCartesiana;
+package Questão2_3_4;
 
 class RetaCartesiana {
     // y = ax+b

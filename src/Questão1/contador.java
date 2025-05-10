@@ -1,4 +1,4 @@
-package contador;
+package Questão1;
 
     class contador {
         private int Valor;

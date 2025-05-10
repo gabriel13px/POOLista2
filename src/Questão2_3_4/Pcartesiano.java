@@ -1,4 +1,4 @@
-package PontoRetaCartesiana;
+package Questão2_3_4;
 
 public  class Pcartesiano {
     // qual raios é a logica do equals
