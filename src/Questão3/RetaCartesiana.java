@@ -1,4 +1,6 @@
-package Questão2_3_4;
+package Questão3;
+
+import Questão2.Pcartesiano;
 
 class RetaCartesiana {
     // y = ax+b

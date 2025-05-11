@@ -1,30 +1,36 @@
 package Questão7;
-
+import java.util.Scanner;
 public class Principal {
     public static void main(String[] args) {
-        ConjuntoString homens = new ConjuntoString();
-        ConjuntoString mulheres = new ConjuntoString();
-        homens.AdicionarElemento("jose");
-        homens.AdicionarElemento("carlos");
-        homens.AdicionarElemento("felipe");
-        mulheres.AdicionarElemento("clara");
-        mulheres.AdicionarElemento("carlos");
-        mulheres.AdicionarElemento("Maia");
-        System.out.println("união:");
-        ConjuntoString União = homens.ConjuntoUniao(mulheres);
-        for(String Elemento : União.getLista()) {
-            System.out.println(Elemento);
-        }
-        System.out.println("intersseção:");
-        ConjuntoString Inter = homens.ConjuntoIntersseçao(mulheres);
-        for(String Elemento2 : Inter.getLista()) {
-            System.out.println(Elemento2);
-        }
-        System.out.println("Subtração:");
-        ConjuntoString Sub = homens.ConjuntoSubtraçao(mulheres);
-        for(String Elemento : Sub.getLista()) {
-            System.out.println(Elemento);
-        }
+        Scanner Teclado = new Scanner(System.in);
 
+        try {
+            ConjuntoString conjunto1 = new ConjuntoString();
+            ConjuntoString conjunto2 = new ConjuntoString();
+            System.out.print("Quantos elementos deseja adicionar ao primeiro conjunto? ");
+            int NumeroConjunto1 = Teclado.nextInt();
+            Teclado.nextLine();
+            for (int valorAtual = 0; valorAtual < NumeroConjunto1; valorAtual++) {
+                System.out.print("Digite o elemento " + (valorAtual +1) + " para o primeiro conjunto: ");
+                String elemento = Teclado.nextLine();
+                conjunto1.AdicionarElemento(elemento);
+            }
+
+            System.out.print("Quantos elementos deseja adicionar ao segundo conjunto? ");
+            int NumeroConjunto2 = Teclado.nextInt();
+            Teclado.nextLine();
+            for (int valorAtual = 0; valorAtual < NumeroConjunto2; valorAtual++) {
+                System.out.print("Digite o elemento " + (valorAtual +1) + " para o segundo conjunto: ");
+                String elemento = Teclado.nextLine();
+                conjunto2.AdicionarElemento(elemento);
+            }
+            System.out.println("\nPrimeiro conjunto: " + conjunto1.getLista());
+            System.out.println("Segundo conjunto: " + conjunto2.getLista());
+            System.out.println("\nUnião dos conjuntos: " + conjunto1.ConjuntoUniao(conjunto2).getLista());
+            System.out.println("Interseção dos conjuntos: " + conjunto1.ConjuntoIntersseçao(conjunto2).getLista());
+            System.out.println("Subtração do segundo conjunto do primeiro: " + conjunto1.ConjuntoSubtraçao(conjunto2).getLista());
+        } catch (Exception e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
     }
 }

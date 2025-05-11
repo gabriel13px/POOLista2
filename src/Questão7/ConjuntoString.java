@@ -33,7 +33,6 @@ public class ConjuntoString {
         }
         return new ConjuntoString(ListaInter);
     }
-
     public ConjuntoString ConjuntoSubtraçao(ConjuntoString Lista){
         ConjuntoString ConjuntoUniao = this.ConjuntoUniao(Lista);
         ConjuntoString ConjuntoInterssao = this.ConjuntoIntersseçao(Lista);

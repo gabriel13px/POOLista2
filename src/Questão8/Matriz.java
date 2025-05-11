@@ -1,52 +1,41 @@
 package Questão8;
-
 public class Matriz {
-    private int linha;
-    private int coluna;
-//    private ArrayList<ArrayList<double>> Matriz = new ArrayList<>;
+    private int Linhas;
+    private int Colunas;
     double [][] matriz;
-    public Matriz(int linha, int coluna) {
-        this.linha = linha;
-        this.coluna = coluna;
-        matriz = new double[linha][coluna];
+
+    public Matriz(int numeroDeLinhas, int numeroDeColunas) {
+        this.Linhas = numeroDeLinhas;
+        this.Colunas = numeroDeColunas;
+        matriz = new double[numeroDeLinhas][numeroDeColunas];
     }
+
     public Matriz(Matriz matriz) {
-        this.linha = matriz.linha;
-        this.coluna = matriz.coluna;
-        this.matriz = new double[linha][coluna];
-        for (int i = 0; i < linha; i++) {
-            for (int j = 0; j < coluna; j++) {
-               this.setMatriz(i,j,matriz.getValorMatriz(i,j));
+        this.Linhas = matriz.Linhas;
+        this.Colunas = matriz.Colunas;
+        this.matriz = new double[Linhas][Colunas];
+        for (int linhaAtual = 0; linhaAtual < this.Linhas; linhaAtual++) {
+            for (int colunaAtual = 0; colunaAtual < this.Colunas; colunaAtual++) {
+                this.setMatriz(linhaAtual, colunaAtual, matriz.getValorMatriz(linhaAtual, colunaAtual));
             }
         }
+    }
 
+    public void setMatriz(int linhaAtual, int colunaAtual, double valor) {
+        matriz[linhaAtual][colunaAtual] = valor;
     }
-    public void setMatriz(int linha, int coluna, double valor) {
-        matriz[linha][coluna] = valor;
 
+    public double getValorMatriz(int linhaAtual, int colunaAtual) {
+        return matriz[linhaAtual][colunaAtual];
     }
-    public double getValorMatriz(int linha, int coluna) {
-        return matriz[linha][coluna];
-    }
-    public Matriz AdiçaoMatriz(Matriz outro) {
-        if (outro.linha == this.linha && outro.coluna == this.coluna) {
-            Matriz resultado = new Matriz(linha, coluna);
-            for (int i = 0; i < linha; i++) {
-                for (int j = 0; j < coluna; j++) {
-                    double soma = this.getValorMatriz(i, j) + outro.getValorMatriz(i, j);
-                    resultado.setMatriz(i, j, soma);
-                }
-            }
-            return resultado;
-        }
-        return null; // Caso as dimensões não batam
-    }
-    public Matriz SubtrairMatriz(Matriz outro) {
-        if (outro.linha == this.linha && outro.coluna == this.coluna) {
-            Matriz resultado = new Matriz(linha, coluna);
-            for (int i = 0; i < linha; i++) {
-                for (int j = 0; j < coluna; j++) {
-                    resultado.setMatriz(i, j, this.getValorMatriz(i, j) - outro.getValorMatriz(i, j));
+
+    public Matriz AdicaoMatriz(Matriz outraMatriz) {
+        if (outraMatriz.Linhas == this.Linhas && outraMatriz.Colunas == this.Colunas) {
+            Matriz resultado = new Matriz(Linhas, Colunas);
+            for (int linhaAtual = 0; linhaAtual < this.Linhas; linhaAtual++) {
+                for (int colunaAtual = 0; colunaAtual < this.Colunas; colunaAtual++) {
+                    double soma = this.getValorMatriz(linhaAtual, colunaAtual) + outraMatriz.getValorMatriz(linhaAtual, colunaAtual);
+                    resultado.setMatriz(linhaAtual, colunaAtual, soma);
                 }
             }
             return resultado;
@@ -54,16 +43,29 @@ public class Matriz {
         return null;
     }
 
-    public Matriz MultiplicarMatriz(Matriz outro) {
-        if (this.coluna == outro.linha) {
-            Matriz resultado = new Matriz(this.linha, outro.coluna);
-            for (int i = 0; i < this.linha; i++) {
-                for (int j = 0; j < outro.coluna; j++) {
+    public Matriz SubtrairMatriz(Matriz outraMatriz) {
+        if (outraMatriz.Linhas == this.Linhas && outraMatriz.Colunas == this.Colunas) {
+            Matriz resultado = new Matriz(Linhas, Colunas);
+            for (int linhaAtual = 0; linhaAtual < this.Linhas; linhaAtual++) {
+                for (int colunaAtual = 0; colunaAtual < this.Colunas; colunaAtual++) {
+                    resultado.setMatriz(linhaAtual, colunaAtual, this.getValorMatriz(linhaAtual, colunaAtual) - outraMatriz.getValorMatriz(linhaAtual, colunaAtual));
+                }
+            }
+            return resultado;
+        }
+        return null;
+    }
+
+    public Matriz MultiplicarMatriz(Matriz outraMatriz) {
+        if (this.Colunas == outraMatriz.Linhas) {
+            Matriz resultado = new Matriz(this.Linhas, outraMatriz.Colunas);
+            for (int linhaAtual = 0; linhaAtual < this.Linhas; linhaAtual++) {
+                for (int colunaAtual = 0; colunaAtual < outraMatriz.Colunas; colunaAtual++) {
                     double soma = 0;
-                    for (int k = 0; k < this.coluna; k++) {
-                        soma += this.matriz[i][k] * outro.matriz[k][j];
+                    for (int k = 0; k < this.Colunas; k++) {
+                        soma += this.matriz[linhaAtual][k] * outraMatriz.matriz[k][colunaAtual];
                     }
-                    resultado.setMatriz(i, j, soma);
+                    resultado.setMatriz(linhaAtual, colunaAtual, soma);
                 }
             }
             return resultado;
@@ -71,98 +73,96 @@ public class Matriz {
         return null;
     }
 
-    public boolean CompararSemantica(Matriz outro) {
-        if (this.linha != outro.linha || this.coluna != outro.coluna) return false;
-        for (int i = 0; i < linha; i++) {
-            for (int j = 0; j < coluna; j++) {
-                if (this.matriz[i][j] != outro.matriz[i][j]) return false;
+    public boolean CompararSemantica(Matriz outraMatriz) {
+        if (this.Linhas != outraMatriz.Linhas || this.Colunas != outraMatriz.Colunas) return false;
+        for (int linhaAtual = 0; linhaAtual < this.Linhas; linhaAtual++) {
+            for (int colunaAtual = 0; colunaAtual < this.Colunas; colunaAtual++) {
+                if (this.matriz[linhaAtual][colunaAtual] != outraMatriz.matriz[linhaAtual][colunaAtual]) return false;
             }
         }
         return true;
     }
 
     public Matriz Transposta() {
-        Matriz transposta = new Matriz(coluna, linha);
-        for (int i = 0; i < linha; i++) {
-            for (int j = 0; j < coluna; j++) {
-                transposta.setMatriz(j, i, matriz[i][j]);
+        Matriz transposta = new Matriz(Colunas, Linhas);
+        for (int linhaAtual = 0; linhaAtual < this.Linhas; linhaAtual++) {
+            for (int colunaAtual = 0; colunaAtual < this.Colunas; colunaAtual++) {
+                transposta.setMatriz(colunaAtual, linhaAtual, matriz[linhaAtual][colunaAtual]);
             }
         }
         return transposta;
     }
 
     public Matriz Oposta() {
-        Matriz oposta = new Matriz(linha, coluna);
-        for (int i = 0; i < linha; i++) {
-            for (int j = 0; j < coluna; j++) {
-                oposta.setMatriz(i, j, -matriz[i][j]);
+        Matriz oposta = new Matriz(Linhas, Colunas);
+        for (int linhaAtual = 0; linhaAtual < this.Linhas; linhaAtual++) {
+            for (int colunaAtual = 0; colunaAtual < this.Colunas; colunaAtual++) {
+                oposta.setMatriz(linhaAtual, colunaAtual, -matriz[linhaAtual][colunaAtual]);
             }
         }
         return oposta;
     }
 
-    public static Matriz Nula(int linha, int coluna) {
-        return new Matriz(linha, coluna); // inicializa com zeros
+    public static Matriz Nula(int numeroDeLinhas, int numeroDeColunas) {
+        return new Matriz(numeroDeLinhas, numeroDeColunas); // inicializa com zeros
     }
 
-    public boolean isIdentidade() {
-        if (linha != coluna) return false;
-        for (int i = 0; i < linha; i++) {
-            for (int j = 0; j < coluna; j++) {
-                if (i == j && matriz[i][j] != 1) return false;
-                if (i != j && matriz[i][j] != 0) return false;
+    public boolean EIdentidade() {
+        if (Linhas != Colunas) return false;
+        for (int linhaAtual = 0; linhaAtual < this.Linhas; linhaAtual++) {
+            for (int colunaAtual = 0; colunaAtual < this.Colunas; colunaAtual++) {
+                if (linhaAtual == colunaAtual && matriz[linhaAtual][colunaAtual] != 1) return false;
+                if (linhaAtual != colunaAtual && matriz[linhaAtual][colunaAtual] != 0) return false;
             }
         }
         return true;
     }
 
-    public boolean isDiagonal() {
-        if (linha != coluna) return false;
-        for (int i = 0; i < linha; i++) {
-            for (int j = 0; j < coluna; j++) {
-                if (i != j && matriz[i][j] != 0) return false;
+    public boolean EDiagonal() {
+        if (Linhas != Colunas) return false;
+        for (int linhaAtual = 0; linhaAtual < this.Linhas; linhaAtual++) {
+            for (int colunaAtual = 0; colunaAtual < this.Colunas; colunaAtual++) {
+                if (linhaAtual != colunaAtual && matriz[linhaAtual][colunaAtual] != 0) return false;
             }
         }
         return true;
     }
 
-    public boolean isSingular() {
-        if (!isDiagonal()) return false;
+    public boolean ESingular() {
+        if (!EDiagonal()) return false;
         double valor = matriz[0][0];
-        for (int i = 1; i < linha; i++) {
-            if (matriz[i][i] != valor) return false;
+        for (int linhaAtual = 1; linhaAtual < this.Linhas; linhaAtual++) {
+            if (matriz[linhaAtual][linhaAtual] != valor) return false;
         }
         return true;
     }
 
-    public boolean isSimetrica() {
-        if (linha != coluna) return false;
-        for (int i = 0; i < linha; i++) {
-            for (int j = 0; j < coluna; j++) {
-                if (matriz[i][j] != matriz[j][i]) return false;
+    public boolean ESimetrica() {
+        if (Linhas != Colunas) return false;
+        for (int linhaAtual = 0; linhaAtual < this.Linhas; linhaAtual++) {
+            for (int colunaAtual = 0; colunaAtual < this.Colunas; colunaAtual++) {
+                if (matriz[linhaAtual][colunaAtual] != matriz[colunaAtual][linhaAtual]) return false;
             }
         }
         return true;
     }
 
-    public boolean isAntiSimetrica() {
-        if (linha != coluna) return false;
-        for (int i = 0; i < linha; i++) {
-            for (int j = 0; j < coluna; j++) {
-                if (matriz[i][j] != -matriz[j][i]) return false;
+    public boolean EAntiSimetrica() {
+        if (Linhas != Colunas) return false;
+        for (int linhaAtual = 0; linhaAtual < this.Linhas; linhaAtual++) {
+            for (int colunaAtual = 0; colunaAtual < this.Colunas; colunaAtual++) {
+                if (matriz[linhaAtual][colunaAtual] != -matriz[colunaAtual][linhaAtual]) return false;
             }
         }
         return true;
     }
 
     public void imprimirMatriz() {
-        for (int i = 0; i < linha; i++) {
-            for (int j = 0; j < coluna; j++) {
-                System.out.printf("%f", matriz[i][j]);
+        for (int linhaAtual = 0; linhaAtual < this.Linhas; linhaAtual++) {
+            for (int colunaAtual = 0; colunaAtual < this.Colunas; colunaAtual++) {
+                System.out.printf("%f ", matriz[linhaAtual][colunaAtual]);
             }
             System.out.println();
         }
     }
-
-
 }

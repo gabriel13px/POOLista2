@@ -1,4 +1,6 @@
-package Questão2_3_4;
+package Questão4;
+
+import Questão2.Pcartesiano;
 
 public class CirculoCartesiano {
     private double CentroAbscissa,CentroOrdenada,Raio;
